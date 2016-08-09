@@ -1,0 +1,76 @@
+#logo{
+	height: 40px;
+    width: 200px;
+    padding-top: 10px;
+    padding-right: 5px;
+}
+
+.vertical-line{
+	border-left: thick solid #3393b7;
+}
+
+.vertical-line-right{
+    border-right: thick solid #3393b7;
+}
+
+.container .text-muted {
+    margin: 20px 0;
+}
+
+.btn-circle {
+  width: 27px;
+  height: 27px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 15px;
+}
+
+.btn-circle-green {
+  width: 27px;
+  height: 27px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 50%;
+  background: #3598dc;
+  color: #fff;
+  border-color: #3598dc;
+}
+
+.btn-circle-red {
+  width: 27px;
+  height: 27px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 50%;
+  background: #e12330;
+  color: #fff;
+  border-color: #e7505a;
+}
+
+.btn-circle-orange {
+  width: 27px;
+  height: 27px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 50%;
+  background: #efad4d;
+  border-color: #efad4d;
+  color: #fff;
+}
+
+form{
+    padding-bottom: 10px;
+}
+
+#tabla_comunicaciones{
+    height: 450px;
+    overflow: auto;
+}
