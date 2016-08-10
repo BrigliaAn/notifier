@@ -1,0 +1,29 @@
+{
+  "name": "notifier",
+  "version": "1.0.0",
+  "description": "simple notification system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrigliaAn/notifier.git"
+  },
+  "keywords": [
+    "notificacion"
+  ],
+  "author": "antonella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrigliaAn/notifier/issues"
+  },
+  "homepage": "https://github.com/BrigliaAn/notifier#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.10.0"
+  }
+}

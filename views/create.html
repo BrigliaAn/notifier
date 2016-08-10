@@ -35,12 +35,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="pull-left" href="#"><img id="logo" src="sources/logo.png"/></a>
+          <a class="pull-left" href="admin"><img id="logo" src="sources/logo.png"/></a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">Nuevo</a></li>
-            <li><a href="#about">Listar</a></li>
+            <li><a href="create">Nuevo</a></li>
+            <li><a href="list">Listar</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -49,41 +49,27 @@
     <!-- Begin page content -->
     <div class="container" style="padding-top: 30px;">
       <div class="page-header">
-        <h1>Últimas comunicaciones</h1>
+        <h4>Nueva comunicación</h4>
       </div>
-     <div class="vertical-line col-lg-6 col-md-6 col-sm-6 col-xs-6" />
-      <div class="list-group"> 
-        <a href="#" class="list-group-item active">
-          <h4 class="list-group-item-heading">List group item heading</h4> 
-          <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p> 
-        </a>
-        <a href="#" class="list-group-item"> 
-          <h4 class="list-group-item-heading">List group item heading</h4> 
-          <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p> 
-        </a> 
-        <a href="#" class="list-group-item">
-          <h4 class="list-group-item-heading">List group item heading</h4>
-          <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        </a> 
-      </div>
-     </div>
-     <div class="vertical-line col-lg-6 col-md-6 col-sm-6 col-xs-6" />
-        <div class="list-group"> 
-          <a href="#" class="list-group-item active">
-            <h4 class="list-group-item-heading">List group item heading</h4> 
-            <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p> 
-          </a>
-          <a href="#" class="list-group-item"> 
-            <h4 class="list-group-item-heading">List group item heading</h4> 
-            <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p> 
-          </a> 
-          <a href="#" class="list-group-item">
-            <h4 class="list-group-item-heading">List group item heading</h4>
-            <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          </a> 
-       </div>
-      </div>
-    </div>
+      <form role="form">
+        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <label for="title">Título</label>
+          <input type="text" class="form-control" id="title" maxlength="50" value="Comunicación">
+        </div>
+        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <label for="title">Pantalla</label>
+          <select class="form-control" id="office_id">
+            <option>Escobar</option>
+            <option>Derqui</option>
+            <option>Todos</option>
+          </select>
+        </div>
+        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <label for="content">Mensaje</label>
+          <textarea class="form-control" rows="14" id="content" maxlength="500"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default">Crear</button>
+      </form>
     </div>
     <footer class="footer">
       <div class="container">
