@@ -7,7 +7,7 @@ var path = __dirname + '/views/';
 //app.use(bodyParser.json()); // support json encoded bodies
 //app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-var Notification = require('./model/notification.js');
+//var Notification = require('./model/notification.js');
 
 router.use(function(req,res,next){
 	console.log('/'+req.method);
