@@ -3,9 +3,9 @@ const app = express();
 var router = express.Router();
 var path = __dirname + '/views/';
 
-var bodyParser = require('body-parser');
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+//var bodyParser = require('body-parser');
+//app.use(bodyParser.json()); // support json encoded bodies
+//app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 var Notification = require('./model/notification.js');
 
