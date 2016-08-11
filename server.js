@@ -15,13 +15,12 @@ router.use(function(req,res,next){
 	next();
 });
 
-router.get('/admin',function(req,res){
+router.get('/',function(req,res){
 	db.collection('notitest').find().toArray(function(err, result) {
   		if(err){
   			console.log(err);
   		}
-  		console.log(result);
-		res.render(path + 'admin.ejs', {notitest: result});
+  		res.render(path + 'admin.ejs', {notitest: result});
 	})
 });
 
@@ -38,7 +37,6 @@ router.get('/list',function(req,res){
   		if(err){
   			console.log(err);
   		}
-  		console.log(result);
 		res.render(path + 'list.ejs', {notitest: result});
 	})
 });
@@ -49,7 +47,6 @@ router.post('/createNotification',function(req,res){
     	return console.log(err)
     }
     console.log('saved to database')
-    console.log(req.body);
 	res.sendFile(path + 'create.html');
   })	
 });
