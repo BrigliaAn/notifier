@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/BrigliaAn/notifier#readme",
   "dependencies": {
+    //"body-parser": "^1.15.2",
     "express": "^4.14.0"
   },
   "devDependencies": {
