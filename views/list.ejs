@@ -71,8 +71,9 @@
                   </td>
                   <td>
                     <a href="#" class="btn btn-default btn-circle-green" title="Notificado"><i class="glyphicon glyphicon-ok"></i></a>
-                    <a href="#" class="btn btn-default btn-circle-orange" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a href="#" class="btn btn-default btn-circle-red" title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+                    <a href="/edit/<%= notitest[i]._id %>" class="btn btn-default btn-circle-orange" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="/delete/<%= notitest[i]._id %>" class="btn btn-default btn-circle-red" title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+                    <input type="hidden" name ="_id" value= <%= notitest[i]._id %> />
                   </td>
                 </tr>
               <% } %>             

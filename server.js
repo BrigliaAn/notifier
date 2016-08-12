@@ -4,6 +4,7 @@ var router = express.Router();
 var path = __dirname + '/views/';
 
 var bodyParser = require('body-parser');
+var ObjectId = require('mongodb').ObjectID;
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.set('view engine', 'ejs');
@@ -16,7 +17,7 @@ router.use(function(req,res,next){
 });
 
 router.get('/',function(req,res){
-	db.collection('notitest').find().toArray(function(err, result) {
+	db.collection('notitest').find().sort({_id:-1}).limit(6).toArray(function(err, result) {
   		if(err){
   			console.log(err);
   		}
@@ -33,7 +34,7 @@ router.get('/create',function(req,res){
 });
 
 router.get('/list',function(req,res){
-	db.collection('notitest').find().toArray(function(err, result) {
+	db.collection('notitest').find().sort({_id:-1}).limit(50).toArray(function(err, result) {
   		if(err){
   			console.log(err);
   		}
@@ -49,6 +50,28 @@ router.post('/createNotification',function(req,res){
     console.log('saved to database')
 	res.sendFile(path + 'create.html');
   })	
+});
+
+router.get('/delete/:id',function(req,res){
+	console.log(req.params.id);
+	db.collection('notitest').remove({_id : ObjectId(req.params.id)},function(err,del){
+		if(err) console.log(err);
+		console.log("deleted  ", del);
+	});
+	res.redirect('/list');
+});
+
+router.get('/edit',function(req,res){
+	console.log(result);
+	res.render(path + 'edit.ejs');
+});
+
+router.get('/edit/:id',function(req,res){
+	console.log(req.params.id);
+	db.collection('notitest').findOne({_id: ObjectId(req.params.id)},function(err,result){
+		if(err) console.log(err);
+		res.redirect('/edit',result);
+	});
 });
 
 app.use('/',router);
