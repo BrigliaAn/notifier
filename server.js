@@ -1,105 +1,120 @@
 const express = require('express');
 const app = express();
 var router = express.Router();
-var path = __dirname + '/views/';
+
+var views_path = __dirname + '/views/';
 
 var bodyParser = require('body-parser');
-var ObjectId = require('mongodb').ObjectID;
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.set('view engine', 'ejs');
 
-const MongoClient = require('mongodb').MongoClient;
+var config = require('./config.global');
+
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect(config.mongo.uri,function (err, res) {
+	if (err) {
+		console.log ('ERROR connecting to: ' + config.mongo.uri + '. ' + err);
+	} else {
+		console.log ('Succeeded connected to: ' + config.mongo.uri);
+	}
+});
+
+var Notification = require(__dirname +'/model/notification.js');
 
 router.use(function(req,res,next){
 	console.log('/'+req.method);
 	next();
 });
 
-router.get('/',function(req,res){
-	db.collection('notitest').find().sort({_id:-1}).limit(6).toArray(function(err, result) {
-  		if(err){
-  			console.log(err);
-  		}
-  		res.render(path + 'admin.ejs', {notitest: result});
-	})
-});
-
-router.get('/index',function(req,res){
-	res.sendFile(path + 'index.html');
-});
-
 router.get('/create',function(req,res){
-	res.sendFile(path + 'create.html');
-});
-
-router.get('/list',function(req,res){
-	db.collection('notitest').find().sort({_id:-1}).limit(50).toArray(function(err, result) {
-  		if(err){
-  			console.log(err);
-  		}
-		res.render(path + 'list.ejs', {notitest: result});
-	})
+	res.sendFile(views_path + 'create.html');
 });
 
 router.post('/createNotification',function(req,res){
-	db.collection('notitest').save(req.body, (err, result) => {
-    if (err) {
-    	return console.log(err)
-    }
-    console.log('saved to database')
-	res.sendFile(path + 'create.html');
-  })	
-});
-
-router.get('/delete/:id',function(req,res){
-	console.log(req.params.id);
-	db.collection('notitest').remove({_id : ObjectId(req.params.id)},function(err,del){
-		if(err) console.log(err);
-		console.log("deleted  ", del);
+	 Notification.create({title:req.body.title,content:req.body.content,office_id:req.body.office_id},function(err){
+		if (err) throw err;
+  		console.log('User saved successfully!');
 	});
 	res.redirect('/list');
 });
 
-router.get('/edit',function(req,res){
-	console.log(result);
-	res.render(path + 'edit.ejs');
+
+router.get('/',function(req,res){
+	Notification.find({}).sort({'date': -1}).limit(6).exec(function(err, result) {
+  		if(err){
+  			console.log(err);
+  		}
+  		console.log(result[2]);
+  		res.render(views_path + 'admin.ejs', {notifications: result});
+	})
+});
+
+
+router.get('/index',function(req,res){
+	res.sendFile(views_path + 'index.html');
+});
+
+router.get('/create',function(req,res){
+	res.sendFile(views_path + 'create.html');
+});
+
+router.get('/list',function(req,res){
+	Notification.find({}).sort({'date': -1}).limit(50).exec(function(err, result) {
+  		if(err){
+  			console.log(err);
+  		}
+		res.render(views_path + 'list.ejs', {notifications: result});
+	})
+});
+
+router.get('/notify/:id',function(req,res){
+	Notification.findOne({_id:req.params.id},function(err,result){
+		if(err) console.log(err);
+		if(result.notified == false){
+			result.notified = true;
+		}else{
+			result.notified = false;
+		}
+		result.save();
+		res.redirect('/list'); 
+	});
+});
+
+router.get('/delete/:id',function(req,res){
+	Notification.findOneAndRemove({_id:req.params.id},function(err,result){
+		if(err) console.log(err);
+		res.redirect('/list');
+	});
 });
 
 router.get('/edit/:id',function(req,res){
-	console.log(req.params.id);
-	db.collection('notitest').findOne({_id: ObjectId(req.params.id)},function(err,result){
+	Notification.findOne({_id:req.params.id},function(err,result){
 		if(err) console.log(err);
-		res.redirect('/edit',result);
+		res.render('edit.ejs',{notification: result});
 	});
 });
+
+router.post('/edit/:id',function(req,res){
+	Notification.findOneAndUpdate({_id:req.params.id},{title:req.body.title,content:req.body.content,office_id:req.body.office_id},
+		function(err,result){
+		if(err) console.log(err);
+		res.redirect('/list');
+	});
+});
+
 
 app.use('/',router);
 app.use(express.static(__dirname + '/public'));
 
 //app.use("*",function(req,res){
-// 	res.sendFile(path + "404.html");
+// 	res.sendFile(views_path + "404.html");
 //});
 
-
-var db;
-
-MongoClient.connect('mongodb://antonella:539briglia@ds153715.mlab.com:53715/linea291-notifier', (err, database) => {
-  if (err){
-  	return console.log(err)
-  }
-  db = database
-  app.listen(process.env.PORT || 5000, () => {
-    console.log('listening on 5000')
-  })
-})
-
-//app.listen(process.env.PORT || 5000);
-
-//app.listen(3000,function(){
-//	console.log('Listening on port 3000');
-//})
-
+app.listen(process.env.PORT || config.port, function() {
+    console.log('listening on ' + config.port)
+});
 
 
 

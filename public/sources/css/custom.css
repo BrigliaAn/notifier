@@ -27,7 +27,7 @@
   border-radius: 15px;
 }
 
-.btn-circle-green {
+.btn-circle-blue {
   width: 27px;
   height: 27px;
   text-align: center;
@@ -38,6 +38,19 @@
   background: #3598dc;
   color: #fff;
   border-color: #3598dc;
+}
+
+.btn-circle-green {
+  width: 27px;
+  height: 27px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 50%;
+  background: #5eba7d;
+  color: #fff;
+  border-color: #5eba7d;
 }
 
 .btn-circle-red {

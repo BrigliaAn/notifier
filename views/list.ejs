@@ -61,19 +61,23 @@
               </tr>
             </thead>
             <tbody> 
-              <% for(var i=0; i<notitest.length; i++) {%>
+              <% for(var i=0; i<notifications.length; i++) {%>
                 <tr>
                   <td>
-                  <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading"><%= notitest[i].title %></h4> 
-                  <p class="list-group-item-text"><%= notitest[i].content %></p>
+                    <a href="#" class="list-group-item">
+                  <h4 class="list-group-item-heading"><%= notifications[i].title %></h4> 
+                  <p class="list-group-item-text"><%= notifications[i].content %></p>
                   </a>
                   </td>
                   <td>
-                    <a href="#" class="btn btn-default btn-circle-green" title="Notificado"><i class="glyphicon glyphicon-ok"></i></a>
-                    <a href="/edit/<%= notitest[i]._id %>" class="btn btn-default btn-circle-orange" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a href="/delete/<%= notitest[i]._id %>" class="btn btn-default btn-circle-red" title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
-                    <input type="hidden" name ="_id" value= <%= notitest[i]._id %> />
+                  <% if (notifications[i].notified == true) { %>
+                    <a href="/notify/<%= notifications[i]._id %>" class="btn btn-default btn-circle-green" title="Notificado"><i class="glyphicon glyphicon-ok"></i></a>
+                  <% }else{ %>
+                    <a href="/notify/<%= notifications[i]._id %>" class="btn btn-default btn-circle-blue" title="Notificado"><i class="glyphicon glyphicon-ok"></i></a>
+                  <% } %>
+                    <a href="/edit/<%= notifications[i]._id %>" class="btn btn-default btn-circle-orange" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="/delete/<%= notifications[i]._id %>" class="btn btn-default btn-circle-red" title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+                    <input type="hidden" name ="_id" value= <%= notifications[i]._id %> />
                   </td>
                 </tr>
               <% } %>             

@@ -51,22 +51,22 @@
       <div class="page-header">
         <h4>Editar comunicación</h4>
       </div>
-      <form role="form">
+      <form role="form" action="/edit/<%= notification.id%>" method="POST" >
         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <label for="title">Título</label>
-          <input type="text" class="form-control" id="title" maxlength="50"  >
+          <input type="text" class="form-control" id="title" maxlength="50"  name="title" value="<%= notification.title %>" >
         </div>
         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <label for="title">Pantalla</label>
-          <select class="form-control" id="office_id">
-            <option>Escobar</option>
-            <option>Derqui</option>
-            <option>Todos</option>
+          <select class="form-control" id="office_id" name="office_id">
+            <option value="1">Escobar</option>
+            <option value="2">Derqui</option>
+            <option value="3">Todos</option>
           </select>
         </div>
         <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <label for="content">Mensaje</label>
-          <textarea class="form-control" rows="14" id="content" maxlength="500" ></textarea>
+          <textarea class="form-control" rows="14" id="content" maxlength="500" name="content"><%= notification.content %></textarea>
         </div>
         <button type="submit" class="btn btn-default">Guardar cambios</button>
       </form>
