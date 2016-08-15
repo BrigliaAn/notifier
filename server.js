@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var path = require('path');
 var config = require('./config.global');
+var ejsLayouts = require("express-ejs-layouts");
+var notifications = require('./routes/notifications.js');
 
 var app = express();
 
@@ -19,9 +21,7 @@ mongoose.connect(config.mongo.uri,function (err, res) {
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
-var notifications = require('./routes/notifications.js');
-
+app.use(ejsLayouts);
 app.use('/notifications', notifications);
 app.use(express.static(__dirname + '/public'));
 

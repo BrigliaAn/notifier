@@ -81,4 +81,11 @@ router.post('/edit/:id',function(req,res){
 	});
 });
 
+router.get('/showDetails/:id',function(req,res){
+	Notification.findOne({_id:req.params.id},function(err,result){
+		if(err) console.log(err);
+		res.render('details',{layout: false,notification:result});
+	});
+});
+
 module.exports = router;

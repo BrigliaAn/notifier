@@ -1,0 +1,13 @@
+<!-- Detailed view of specific notification -->
+<div class="panel panel-primary">
+    <% if (notification) {%>
+    <div class="panel-heading"><%= notification.title %></div>
+      <div class="panel-body">
+        <p><%= notification.date %></p>
+        <p><%= notification.office_id %></p>
+        <p><%= notification.content %></p>   
+        <p><%= notification.notified %></p>     
+      </div>         
+     <% }%>
+</div>
+<!-- end detailed view -->
