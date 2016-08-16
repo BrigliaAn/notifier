@@ -8,6 +8,15 @@ var notificationSchema = new mongoose.Schema({
 	notified : {type:Boolean, default : false},
 });
 
+
 var Notification = mongoose.model('Notification', notificationSchema);
+
+Notification.getLatestNotification = function(callback){
+	Notification.findOne({}).sort({'date': -1}).exec(function(err, result) {
+		console.log('Latest notification',result);
+		if (err) return callback(err);
+        callback(null, result);
+	});
+}
 
 module.exports = Notification;

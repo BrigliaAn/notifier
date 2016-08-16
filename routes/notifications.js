@@ -22,15 +22,21 @@ router.get('/',function(req,res){
 });
 
 router.post('/createNotification',function(req,res){
-	 Notification.create({title:req.body.title,content:req.body.content,office_id:req.body.office_id},function(err){
+	var event = req.app.get('notificationsEvents');
+	Notification.create({title:req.body.title,content:req.body.content,office_id:req.body.office_id},function(err,result){
 		if (err) throw err;
-  		console.log('User saved successfully!');
+  		console.log('Notification saved successfully!');
+  		event.emit('notification-created',result);
 	});
 	res.redirect('./list');
 });
 
 router.get('/index',function(req,res){
-	res.sendFile('./index.html');
+	var event = req.app.get('notificationsEvents');
+	Notification.getLatestNotification(function(err,result){
+		event.emit('latest-notification',result);
+		res.render('./index.ejs', {layout:false});
+	});
 });
 
 router.get('/create',function(req,res){
@@ -54,14 +60,16 @@ router.get('/notify/:id',function(req,res){
 		}else{
 			result.notified = false;
 		}
-		result.save();
-		res.redirect('/notifications/list'); 
+		result.save();		 
+		res.redirect('/notifications/list');
 	});
 });
 
 router.get('/delete/:id',function(req,res){
+	var event = req.app.get('notificationsEvents');
 	Notification.findOneAndRemove({_id:req.params.id},function(err,result){
 		if(err) console.log(err);
+		event.emit('latest-notification',result);
 		res.redirect('/notifications/list');
 	});
 });
@@ -74,11 +82,13 @@ router.get('/edit/:id',function(req,res){
 });
 
 router.post('/edit/:id',function(req,res){
+	var event = req.app.get('notificationsEvents');
 	Notification.findOneAndUpdate({_id:req.params.id},{title:req.body.title,content:req.body.content,office_id:req.body.office_id},
 		function(err,result){
 		if(err) console.log(err);
-		res.redirect('/notifications/list');
+		event.emit('latest-notification',result);		
 	});
+	res.redirect('/notifications/list');
 });
 
 router.get('/showDetails/:id',function(req,res){
