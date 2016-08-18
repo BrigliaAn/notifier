@@ -12,7 +12,7 @@ router.use(function (req,res,next){
 
 router.get('/',function(req,res){
 	Notification.getLatestNotification(function(err,result){
-		res.render('./index.ejs', {layout:false,notification:result});
+		res.render('./index.ejs', {layout:false, notification:result});
 	});
 });
 

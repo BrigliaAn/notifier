@@ -33,7 +33,7 @@ app.use('/notifications', notifications);
 app.use(express.static(__dirname + '/public'));
 
 app.use("*",function(req,res){
- 	res.sendFile(__dirname + '/public/404.html'); 
+ 	res.sendFile(__dirname + '/public/404.html');
 });
 
 var server = app.listen(process.env.PORT || config.port, function() {
@@ -42,28 +42,20 @@ var server = app.listen(process.env.PORT || config.port, function() {
 
 var io = socketio.listen(server);
 
-io.sockets.on('connection', function(socket,username) {  
-    console.log('Client connected...');
-    socket.emit('message', 'You are conected');
-    socket.broadcast.emit('message','New connection stablished');
-    
-    socket.on('new_user',function(username){
-    	console.log('New user connected with username: ',username);
-    	socket.username = username;
-    });
-    events.on('latest-notification',function(notification){
-    	console.log("This is the lastest notification", notification);
-    	socket.emit('latest-notification',notification);
-    });
-    events.on('notification-created',function(notification){
-    	console.log('New notification created');
-    	socket.emit('notification-created', notification);
-    });
+io.use(function(socket, next){
+    if ( typeof socket.handshake.query.sede === "string") {
+				socket.sede = socket.handshake.query.sede;
+				return next();
+    }
+    // call next() with an Error if you need to reject the connection.
+    next(new Error('Authentication error: No sede'));
 });
 
+io.on('connection', function(socket,username) {
+    console.log('Client connected... SEDE: ' + socket.sede );
 
-
-
-
-
-
+    events.on('latest-notification-changed',function(notification){
+    	console.log("This is the lastest notification", JSON.stringify(notification) );
+    	socket.emit('latest-notification-changed',notification);
+    });
+});
