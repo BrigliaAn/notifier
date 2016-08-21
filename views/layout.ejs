@@ -18,6 +18,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/sources/js/utils.js"></script>
+    <!-- include summernote js-->
+    <script src="/sources/summernote/summernote.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -64,5 +66,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/sources/js/jquery/jquery.min.js"><\/script>')</script>
     <script src="/sources/bootstrap/js/bootstrap.min.js"></script>
+    <!-- include summernote js-->
+    <script src="/sources/summernote/summernote.min.js"></script>
+    <!-- include summernote-es-ES -->
+    <script src="/sources/summernote/lang/summernote-es-ES.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#summernote').summernote({
+            height: 220,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: false,                  // set focus to editable area after initializing summernote
+            lang: 'es-ES',
+          });
+          $('#summernote').on('summernote.change', function(we, e) {
+            $('input[name=content]').val($("#summernote").summernote("code"));
+          });
+      });
+    </script>
   </body>
 </html>

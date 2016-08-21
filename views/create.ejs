@@ -1,26 +1,31 @@
-    <!-- Begin page content -->
-    <div class="container" style="padding-top: 30px;">
-      <div class="page-header">
-        <h4>Nueva comunicación</h4>
-      </div>
-      <form role="form" action="/notifications/createNotification" method="POST">
-        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-          <label for="title">Título</label>
-          <input type="text" name="title" class="form-control" id="title" maxlength="50" value="Comunicación">
-        </div>
-        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-          <label for="title">Pantalla</label>
-          <select class="form-control" id="office_id" name="office_id">
-            <option value="1">Escobar</option>
-            <option value="2">Derqui</option>
-            <option value="3">Todos</option>
-          </select>
-        </div>
-        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <label for="content">Mensaje</label>
-          <textarea class="form-control" name ="content" rows="14" id="content" maxlength="500"></textarea>
-        </div>
-        <button type="submit" class="btn btn-default">Crear</button>
-      </form>
+<!--sommernote css -->
+<link href="/sources/summernote/summernote.css" rel="stylesheet">
+<!-- Begin page content -->
+<div class="container" style="padding-top: 30px;">
+  <div class="page-header">
+    <h4>Nueva comunicación</h4>
+  </div>
+  <form role="form" action="/notifications/createNotification" method="POST">
+    <input type="hidden" name="content" />
+    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <label for="title">Título</label>
+      <input type="text" name="title" class="form-control" id="title" maxlength="50" value="Comunicación">
     </div>
+    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <label for="title">Pantalla</label>
+      <select class="form-control" id="office_id" name="office_id">
+        <option value="1">Escobar</option>
+        <option value="2">Derqui</option>
+        <option value="3">Todos</option>
+      </select>
+    </div>
+    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label for="content">Mensaje</label>
+      <div id="summernote">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-default">Crear</button>
+  </form>
+</div>
+
 

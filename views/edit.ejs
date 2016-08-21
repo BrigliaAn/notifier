@@ -1,9 +1,12 @@
+   <!--sommernote css -->
+  <link href="/sources/summernote/summernote.css" rel="stylesheet">
     <!-- Begin page content -->
     <div class="container" style="padding-top: 30px;">
       <div class="page-header">
         <h4>Editar comunicación</h4>
       </div>
       <form role="form" action="/notifications/edit/<%= notification.id%>" method="POST" >
+        <input id="content" type="hidden" name="content" value="<%= notification.content %>"/>
         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
           <label for="title">Título</label>
           <input type="text" class="form-control" id="title" maxlength="50"  name="title" value="<%= notification.title %>" >
@@ -18,8 +21,15 @@
         </div>
         <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <label for="content">Mensaje</label>
-          <textarea class="form-control" rows="14" id="content" maxlength="500" name="content"><%= notification.content %></textarea>
+          <div id="summernote">
+          
+          </div>
         </div>
         <button type="submit" class="btn btn-default">Guardar cambios</button>
       </form>
     </div>
+    <script>
+    $(document).ready(function(){
+        $('#summernote').summernote('code', $('#content').val());
+    });
+    </script>

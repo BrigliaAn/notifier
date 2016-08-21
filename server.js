@@ -21,7 +21,7 @@ mongoose.connect(config.mongo.uri,function (err, res) {
 	if (err) {
 		console.log ('ERROR connecting to: ' + config.mongo.uri + '. ' + err);
 	} else {
-		console.log ('Succeeded connected to: ' + config.mongo.uri);
+		console.log ('Succees! Connected to: ' + config.mongo.uri);
 	}
 });
 

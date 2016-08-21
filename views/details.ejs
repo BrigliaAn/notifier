@@ -5,8 +5,10 @@
       <div class="panel-body">
         <p><%= notification.date %></p>
         <p><%= notification.office_id %></p>
-        <p><%= notification.content %></p>   
-        <p><%= notification.notified %></p>     
+        <div><%- notification.content %></div>   
+        <p><% if(notification.notified){ %>
+        		Notificada
+        <% } %></p>     
       </div>         
      <% }%>
 </div>
