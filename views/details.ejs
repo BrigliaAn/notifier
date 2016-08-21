@@ -3,9 +3,9 @@
     <% if (notification) {%>
     <div class="panel-heading"><%= notification.title %></div>
       <div class="panel-body">
-        <p><%= notification.date %></p>
+        <p><%= moment(notification.date).format('DD/MM/YYYY, h:mm:ss a')  %></p>
         <p><%= notification.office_id %></p>
-        <div><%- notification.content %></div>   
+        <div style="word-wrap: break-word;"><%- notification.content %></div>   
         <p><% if(notification.notified){ %>
         		Notificada
         <% } %></p>     

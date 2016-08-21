@@ -19,12 +19,7 @@ router.use(function (req,res,next){
 });
 
 router.get('/',function(req,res){
-	Notification.find({}).sort({'date': -1}).limit(6).exec(function(err, result) {
-  		if(err){
-  			console.log(err);
-  		}
-  		res.render('./admin', {notifications: result});
-	})
+  	res.redirect('./list');
 });
 
 router.post('/createNotification',function(req,res){

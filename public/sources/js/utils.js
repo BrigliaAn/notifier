@@ -37,7 +37,7 @@ function getCurrentMonth(){
 $(document).ready(function(){
 
   $('.details').click(function(){
-    $.ajax({url: "/notifications/showDetails/"+$(this).attr('value'),
+    $.ajax({url: "/notifications/showDetails/"+$(this).data('id'),
       success: 
         function(data){
           $("#details").html(data);

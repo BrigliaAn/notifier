@@ -1,0 +1,29 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Comunicado</th>
+      <th class="col-md-2">Acción</th>
+    </tr>
+  </thead>
+  <tbody> 
+    <% for(var i=0; i<notifications.length; i++) {%>
+      <tr>
+        <td>
+          <a href="#" name="details" title="Ver detalle" class="list-group-item details" value ="<%= notifications[i]._id %>">
+        <h4 class="list-group-item-heading"><%= notifications[i].title %></h4> 
+        <p class="list-group-item-text"><%- notifications[i].content %></p>
+        </a>
+        </td>
+        <td>
+        <% if (notifications[i].notified == true) { %>
+          <button data-id="<%= notifications[i]._id %>" type="button" class="notify btn btn-info btn-circle"><i class="glyphicon glyphicon-ok"></i></button>
+         <% }else{ %>
+          <button data-id="<%= notifications[i]._id %>" type="button" class="notify btn btn-success btn-circle"><i class="glyphicon glyphicon-ok"></i></button>
+        <% } %>
+          <button data-id="<%= notifications[i]._id %>" type="button" class="edit btn btn-warning btn-circle"><i class="glyphicon glyphicon-pencil"></i></button>
+          <button data-id="<%= notifications[i]._id %>" type="button" class="delete btn btn-danger btn-circle"><i class="glyphicon glyphicon-trash"></i></button>              
+        </td>
+      </tr>
+    <% } %>             
+  </tbody>
+</table>

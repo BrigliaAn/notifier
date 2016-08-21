@@ -15,6 +15,7 @@ var app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views/'));
 app.set('notificationsEvents',events);
+app.locals.moment = require('moment');
 
 
 mongoose.connect(config.mongo.uri,function (err, res) {
