@@ -1,8 +1,8 @@
 #logo{
-	height: 40px;
-    width: 200px;
-    padding-top: 10px;
-    padding-right: 5px;
+  height: 40px;
+  width: 200px;
+  padding-top: 10px;
+  padding-right: 5px;
 }
 
 .vertical-line{
@@ -34,4 +34,15 @@ form{
   font-size: 12px;
   line-height: 1.428571429;
   border-radius: 50%;
+}
+
+.notification-title{
+  text-transform:uppercase;
+}
+
+#details{
+  display:block;
+  width:100%;
+  height:500px;
+  
 }

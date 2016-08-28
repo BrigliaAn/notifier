@@ -25,19 +25,20 @@
                     </div>
                   </td>
                   <td>
-                    <div style="max-width:400px; overflow:hidden;" title="Ver detalle" class="details" data-id="<%= notifications[i]._id %>">
+                    <div style="max-width:350px; overflow:hidden;" title="Ver detalle" class="details" data-id="<%= notifications[i]._id %>">
                       <%- (notifications[i].content).replace(/<[^>]*>/g, '') %>
                     </div>
                   </td>
                   <td>
-                    <div style="min-width: 100px;">
+                    <div style="min-width: 120px;">
                       <% if (notifications[i].notified == true) { %>
-                         <a href="/notifications/notify/<%= notifications[i]._id %>" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-ok"></i></a>
+                         <a href="/notifications/notify/<%= notifications[i]._id %>" class="btn btn-success btn-circle" title="Anular notificación"><i class="glyphicon glyphicon-check"></i></a>
                       <% }else{ %>
-                        <a href="/notifications/notify/<%= notifications[i]._id %>" class="btn btn-success btn-circle" title="Notificar"><i class="glyphicon glyphicon-ok"></i></a>
+                        <a href="/notifications/notify/<%= notifications[i]._id %>" class="btn btn-info btn-circle" title="Notificar"><i class="glyphicon glyphicon-ok"></i></a>
                       <% } %>
                         <a href="/notifications/edit/<%= notifications[i]._id %>" class="btn btn-warning btn-circle" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="/notifications/delete/<%= notifications[i]._id %>" class="btn btn-danger btn-circle" title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>     
+                        <a href="/notifications/delete/<%= notifications[i]._id %>" class="btn btn-danger btn-circle" title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+                        <a href="/notifications/resend/<%= notifications[i]._id %>" class="btn btn-default btn-circle" title="Reenviar"><i class="glyphicon glyphicon-share-alt"></i></a>     
                     </div>               
                   </td>
                 </tr>

@@ -12,7 +12,7 @@ var notificationSchema = new mongoose.Schema({
 var Notification = mongoose.model('Notification', notificationSchema);
 
 Notification.getLatestNotification = function(callback){
-	Notification.findOne({}).sort({'date': -1}).exec(function(err, result) {
+	Notification.findOne({'notified':false}).sort({'date': -1}).exec(function(err, result) {
 		console.log('Latest notification',result);
 		if (err) return callback(err);
         callback(null, result);

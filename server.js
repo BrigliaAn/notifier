@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, '/views/'));
 app.set('notificationsEvents',events);
 app.locals.moment = require('moment');
 
-
+mongoose.Promise = global.Promise;
 mongoose.connect(config.mongo.uri,function (err, res) {
 	if (err) {
 		console.log ('ERROR connecting to: ' + config.mongo.uri + '. ' + err);

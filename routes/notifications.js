@@ -11,8 +11,6 @@ function getEventEmmiter(request) {
 	return request.app.get('notificationsEvents');
 }
 
-
-
 router.use(function (req,res,next){
 	console.log('/'+req.method);
 	next();
@@ -29,7 +27,7 @@ router.post('/createNotification',function(req,res){
 		console.log('Notification saved successfully!');
 		event.emit('latest-notification-changed', result);
 	});
-	res.redirect('./list');
+	res.redirect('/notifications/list');
 });
 
 router.get('/create',function(req,res){
@@ -37,7 +35,7 @@ router.get('/create',function(req,res){
 });
 
 router.get('/list',function(req,res){
-	Notification.find({}).sort({'date': -1}).limit(50).exec(function(err, result) {
+	Notification.find({}).sort({'date': -1}).exec(function(err, result) {
   		if(err){
   			console.log(err);
   		}
@@ -46,15 +44,23 @@ router.get('/list',function(req,res){
 });
 
 router.get('/notify/:id',function(req,res){
+	var event = getEventEmmiter(req);
 	Notification.findOne({_id:req.params.id},function(err,result){
+		notificationId = result.id;
 		if(err) console.log(err);
 		if(result.notified == false){
 			result.notified = true;
 		}else{
 			result.notified = false;
 		}
-		result.save();
-		res.redirect('/notifications/list');
+		result.save().then(function() {
+			Notification.getLatestNotification(function(err,latestNotification){
+				if(latestNotification.id == result.id || result.notified == true){
+					event.emit('latest-notification-changed',latestNotification);
+				}
+			});
+			res.redirect('/notifications/list');			
+		});
 	});
 });
 
@@ -115,6 +121,16 @@ router.get('/showDetails/:id',function(req,res){
 	Notification.findOne({_id:req.params.id},function(err,result){
 		if(err) console.log(err);
 		res.render('details',{layout: false,notification:result});
+	});
+});
+
+router.get('/resend/:id',function(req,res){
+	var event = getEventEmmiter(req);
+	Notification.findOneAndUpdate({_id:req.params.id},{date: new Date(Date()),notified:false},function(err,result){
+		if(err) console.log(err);
+		console.log("reenviar",result);
+		event.emit('latest-notification-changed',result);
+		res.redirect('/notifications/list');
 	});
 });
 
