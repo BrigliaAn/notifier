@@ -47,13 +47,38 @@ var clients = {};
 
 io.use(function(socket, next){
     if ( typeof socket.handshake.query.sede === "string") {
-				socket.sede = socket.handshake.query.sede;
-				return next();
+		socket.sede = socket.handshake.query.sede;
+		return next();
     }
     // call next() with an Error if you need to reject the connection.
     next(new Error('Authentication error: No sede'));
 });
 
+io.on('connection',function(socket){
+    console.log('Client connected ... Sede: ' + socket.sede);
+    clients[socket.sede] = socket;
+    //on start load latest notification for specific client
+    Notification.getLatestNotificationBySede(socket.sede, function(err, notification){
+        console.log("id sede", socket.sede);
+        console.log("notificacion primera" , notification);
+        if(!err) {
+            socket.emit('latest-notification-changed',notification);
+        }
+    });
+    events.on('latest-notification-changed',function(){
+        for (client in clients){
+            Notification.getLatestNotificationBySede(socket.sede, function(err, notification){
+                console.log("id sede", socket.sede);
+                console.log("notificacion primera" , notification);
+                if(!err) {
+                    socket.emit('latest-notification-changed',notification);
+                }
+            });
+        }
+    });
+});
+
+/*
 io.on('connection', function(socket) {
     console.log('Client connected... SEDE: ' + socket.sede );
     clients[socket.sede] = socket;
@@ -82,3 +107,4 @@ io.on('connection', function(socket) {
     //	socket.emit('latest-notification-changed',notification);
     //});
 });
+*/

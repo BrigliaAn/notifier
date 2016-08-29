@@ -17,19 +17,11 @@ router.use(function (req,res,next){
 });
 
 router.get('/',function(req,res){
-	Notification.find({}).sort({'date': -1}).limit(5).exec(function(err, result){
-  		res.render('./admin',{notifications:result});
-  	});
-});
-
-router.post('/createNotification',function(req,res){
-	var event = getEventEmmiter(req);
-	Notification.create({title:req.body.title,content:req.body.content,office_id:req.body.office_id},function(err,result){
-		if (err) throw err;
-		console.log('Notification saved successfully!');
-		event.emit('latest-notification-changed', result);
+	Notification.getLatestNotifications(5,function(err,latestNotifications){
+		if(!err){
+			res.render('./admin', {notifications : latestNotifications});
+		}
 	});
-	res.redirect('/notifications/list');
 });
 
 router.get('/create',function(req,res){
@@ -45,25 +37,22 @@ router.get('/list',function(req,res){
 	})
 });
 
-router.get('/notify/:id',function(req,res){
-	var event = getEventEmmiter(req);
+router.get('/showDetails/:id',function(req,res){
 	Notification.findOne({_id:req.params.id},function(err,result){
-		notificationId = result.id;
 		if(err) console.log(err);
-		if(result.notified == false){
-			result.notified = true;
-		}else{
-			result.notified = false;
-		}
-		result.save().then(function() {
-			Notification.getLatestNotification(function(err,latestNotification){
-				if(latestNotification.id == result.id || result.notified == true){
-					event.emit('latest-notification-changed',latestNotification);
-				}
-			});
-			res.redirect('/notifications/list');			
-		});
+		res.render('details',{layout: false,notification:result});
 	});
+});
+
+router.post('/createNotification',function(req,res){
+	var event = getEventEmmiter(req);
+	Notification.create({title:req.body.title,content:req.body.content,office_id:req.body.office_id},function(err,result){
+		if (err) throw err;
+		console.log('Notification saved successfully!');
+		//event.emit('latest-notification-changed', result);
+		event.emit('latest-notification-changed');
+	});
+	res.redirect('/notifications/list');
 });
 
 router.get('/delete/:id',function(req,res){
@@ -111,10 +100,19 @@ router.post('/edit/:id',function(req,res){
 	});
 });
 
-router.get('/showDetails/:id',function(req,res){
+router.get('/notify/:id',function(req,res){
+	var event = getEventEmmiter(req);
 	Notification.findOne({_id:req.params.id},function(err,result){
+		notificationId = result.id;
 		if(err) console.log(err);
-		res.render('details',{layout: false,notification:result});
+		result.notify().save().then(function() {
+			Notification.getLatestNotification(function(err,latestNotification){
+				if(latestNotification.id == result.id || result.notified == true){
+					event.emit('latest-notification-changed',latestNotification);
+				}
+			});
+			res.redirect('/notifications/list');			
+		});
 	});
 });
 
