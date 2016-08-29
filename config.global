@@ -12,7 +12,7 @@ config.port = 5000;
 
 //mongo database prod
 config.mongo = {};
-config.mongo.uri = 'mongodb://antonella:539briglia@ds153715.mlab.com:53715/linea291-notifier';
+config.mongo.uri = 'mongodb://antonella:539briglia@ds019076.mlab.com:19076/linea291-notifier'
 config.mongo.db = 'linea192-notifier';
 config.mongo.db.user = 'antonella';
 config.mongo.db.password = '539briglia';
