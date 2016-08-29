@@ -66,6 +66,7 @@ io.on('connection',function(socket){
         }
     });
     events.on('new-latest-notification',function(notification){
+        //if office id equals 3 , means all officies should get the new notification
         if(notification.office_id == 3){
             //broadcast to all
             console.log("paratodas las sedes", notification);
@@ -78,6 +79,7 @@ io.on('connection',function(socket){
     });
     events.on('latest-notification-changed',function(notification){
         console.log("deleted notification", notification);
+        //TODO change hardcoded values!!
         if(notification.office_id == 3){
             Notification.getLatestNotificationBySede(1,function(err,latestNotification){
                 console.log("notification",latestNotification);

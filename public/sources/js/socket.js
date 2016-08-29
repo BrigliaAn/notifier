@@ -6,7 +6,7 @@ $(document).ready(function(){
 	$("#button").click(function(){
 		//var username = prompt('Ingrese nombre de la sede:');
 		var username = $('#sede').val();
-		var socket = io.connect('http://localhost:5000', { query: 'sede=' + username });
+		var socket = io.connect('https://antotestapp.herokuapp.com', { query: 'sede=' + username });
 		socket.on('latest-notification-changed',function(notification){
 			//testing
 			console.log("Latest notification from server",notification);
