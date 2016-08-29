@@ -49,8 +49,7 @@ router.post('/createNotification',function(req,res){
 	Notification.create({title:req.body.title,content:req.body.content,office_id:req.body.office_id},function(err,result){
 		if (err) throw err;
 		console.log('Notification saved successfully!');
-		//event.emit('latest-notification-changed', result);
-		event.emit('latest-notification-changed');
+		event.emit('new-latest-notification', result);
 	});
 	res.redirect('/notifications/list');
 });
@@ -63,10 +62,7 @@ router.get('/delete/:id',function(req,res){
 			if(err) console.log(err);
 			var deletedNotification = result;
 			if(deletedNotification.id == latestNotification.id){
-				Notification.getLatestNotification(function(error, newLatestNotification) {
-					if(error) console.log(err);
-					event.emit('latest-notification-changed', newLatestNotification);
-				});
+				event.emit('latest-notification-changed', deletedNotification);
 			}	
 			res.redirect('/notifications/list');
 		});
@@ -92,7 +88,7 @@ router.post('/edit/:id',function(req,res){
 				if(editedNotification.id == latestNotification.id){
 					Notification.getLatestNotification(function(error, newLatestNotification) {
 						if(error) console.log(err);
-						event.emit('latest-notification-changed',newLatestNotification);
+						event.emit('new-latest-notification',newLatestNotification);
 					});
 				}
 		});
@@ -108,7 +104,7 @@ router.get('/notify/:id',function(req,res){
 		result.notify().save().then(function() {
 			Notification.getLatestNotification(function(err,latestNotification){
 				if(latestNotification.id == result.id || result.notified == true){
-					event.emit('latest-notification-changed',latestNotification);
+					event.emit('latest-notification-changed',result);
 				}
 			});
 			res.redirect('/notifications/list');			
@@ -120,7 +116,7 @@ router.get('/resend/:id',function(req,res){
 	var event = getEventEmmiter(req);
 	Notification.findOneAndUpdate({_id:req.params.id},{date: new Date(Date()),notified:false},function(err,result){
 		if(err) console.log(err);
-		event.emit('latest-notification-changed',result);
+		event.emit('new-latest-notification',result);
 		res.redirect('/notifications/list');
 	});
 });

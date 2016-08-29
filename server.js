@@ -65,46 +65,33 @@ io.on('connection',function(socket){
             socket.emit('latest-notification-changed',notification);
         }
     });
-    events.on('latest-notification-changed',function(){
-        for (client in clients){
-            Notification.getLatestNotificationBySede(socket.sede, function(err, notification){
-                console.log("id sede", socket.sede);
-                console.log("notificacion primera" , notification);
-                if(!err) {
-                    socket.emit('latest-notification-changed',notification);
-                }
+    events.on('new-latest-notification',function(notification){
+        if(notification.office_id == 3){
+            //broadcast to all
+            console.log("paratodas las sedes", notification);
+            socket.emit('latest-notification-changed',notification);
+        }else{
+            //emit to office
+            console.log("para sede ", notification.office_id);
+            clients[notification.office_id].emit('latest-notification-changed',notification);
+        }
+    });
+    events.on('latest-notification-changed',function(notification){
+        console.log("deleted notification", notification);
+        if(notification.office_id == 3){
+            Notification.getLatestNotificationBySede(1,function(err,latestNotification){
+                console.log("notification",latestNotification);
+                clients['1'].emit('latest-notification-changed',latestNotification);
+            });
+            Notification.getLatestNotificationBySede(2,function(err,latestNotification){
+                console.log("notification",latestNotification);
+                clients['2'].emit('latest-notification-changed',latestNotification);
+            });
+        }else{
+            Notification.getLatestNotificationBySede(notification.office_id,function(err,latestNotification){
+                console.log("notification.office_id",notification.office_id);
+                clients[notification.office_id].emit('latest-notification-changed',latestNotification);
             });
         }
     });
 });
-
-/*
-io.on('connection', function(socket) {
-    console.log('Client connected... SEDE: ' + socket.sede );
-    clients[socket.sede] = socket;
-    Notification.getLatestNotificationBySede(socket.sede, function(err, notification){
-        console.log("id sede", socket.sede);
-        if(!err) {
-            socket.emit('latest-notification-changed',notification);
-        }
-    });
-    events.on('latest-notification-changed',function(notification){
-        console.log("emitiendo latest nofii", notification);
-        if(notification.office_id == 3){
-            console.log("paratodas las sedes", notification);
-            socket.emit('latest-notification-changed',notification);
-        }
-        if(notification.office_id == 1){
-            console.log("para sede escobar");
-            clients['1'].emit('latest-notification-changed',notification);
-        }
-        if(notification.office_id == 2){
-            console.log("para sede derqui");
-            clients['2'].emit('latest-notification-changed',notification);
-        }
-    });
-    //events.on('latest-notification-changed',function(notification){
-    //	socket.emit('latest-notification-changed',notification);
-    //});
-});
-*/
