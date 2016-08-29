@@ -4,17 +4,17 @@ config.port = 5000;
 
 //mongo database dev
 
-config.mongo = {};
-config.mongo.uri = 'mongodb://antonella-dev:539briglia-dev@ds017736.mlab.com:17736/linea291-notifier-dev';
-config.mongo.db = 'linea192-notifier-dev';
-config.mongo.db.user = 'antonella-dev';
-config.mongo.db.password = '539briglia-dev';
+//config.mongo = {};
+//config.mongo.uri = 'mongodb://antonella-dev:539briglia-dev@ds017736.mlab.com:17736/linea291-notifier-dev';
+//config.mongo.db = 'linea192-notifier-dev';
+//config.mongo.db.user = 'antonella-dev';
+//config.mongo.db.password = '539briglia-dev';
 
 //mongo database prod
-//config.mongo = {};
-//config.mongo.uri = 'mongodb://antonella:539briglia@ds153715.mlab.com:53715/linea291-notifier';
-//config.mongo.db = 'linea192-notifier';
-//config.mongo.db.user = 'antonella';
-//config.mongo.db.password = '539briglia';
+config.mongo = {};
+config.mongo.uri = 'mongodb://antonella:539briglia@ds153715.mlab.com:53715/linea291-notifier';
+config.mongo.db = 'linea192-notifier';
+config.mongo.db.user = 'antonella';
+config.mongo.db.password = '539briglia';
 
 module.exports = config
