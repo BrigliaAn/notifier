@@ -17,7 +17,9 @@ router.use(function (req,res,next){
 });
 
 router.get('/',function(req,res){
-  	res.redirect('./list');
+	Notification.find({}).sort({'date': -1}).limit(5).exec(function(err, result){
+  		res.render('./admin',{notifications:result});
+  	});
 });
 
 router.post('/createNotification',function(req,res){
@@ -67,16 +69,13 @@ router.get('/notify/:id',function(req,res){
 router.get('/delete/:id',function(req,res){
 	var event = getEventEmmiter(req);
 	Notification.getLatestNotification(function(latestError,latestNotification){
-		console.log("Latest Notification Pre Delete: " + latestNotification);
 		var latestNotification = latestNotification;
 		Notification.findOneAndRemove({_id:req.params.id},function(err,result){
 			if(err) console.log(err);
 			var deletedNotification = result;
 			if(deletedNotification.id == latestNotification.id){
 				Notification.getLatestNotification(function(error, newLatestNotification) {
-					console.log("Latest Notification Post Delete: " + newLatestNotification);
 					if(error) console.log(err);
-					console.log("latest notification equals deleted");
 					event.emit('latest-notification-changed', newLatestNotification);
 				});
 			}	
@@ -96,19 +95,14 @@ router.get('/edit/:id',function(req,res){
 router.post('/edit/:id',function(req,res){
 	var event = getEventEmmiter(req);
 	Notification.getLatestNotification(function(latestError,latestNotification){
-		console.log("Latest Notification Pre Edit: " + latestNotification);
 		var latestNotification = latestNotification;
 		Notification.findOneAndUpdate({_id:req.params.id},{title:req.body.title,content:req.body.content,office_id:req.body.office_id},
 			function(err,result){
 				if(err) console.log(err);
-				console.log("Edited notification" + result);
 				var editedNotification = result;
 				if(editedNotification.id == latestNotification.id){
-					console.log("Edited notification equals latest");
 					Notification.getLatestNotification(function(error, newLatestNotification) {
-						console.log("Latest Notification Post Edit: " + newLatestNotification);
 						if(error) console.log(err);
-						console.log("latest notification equals edited");
 						event.emit('latest-notification-changed',newLatestNotification);
 					});
 				}
@@ -128,7 +122,6 @@ router.get('/resend/:id',function(req,res){
 	var event = getEventEmmiter(req);
 	Notification.findOneAndUpdate({_id:req.params.id},{date: new Date(Date()),notified:false},function(err,result){
 		if(err) console.log(err);
-		console.log("reenviar",result);
 		event.emit('latest-notification-changed',result);
 		res.redirect('/notifications/list');
 	});

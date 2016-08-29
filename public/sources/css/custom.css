@@ -40,9 +40,17 @@ form{
   text-transform:uppercase;
 }
 
-#details{
+#details-panel{
   display:block;
   width:100%;
-  height:500px;
-  
+  height:300px;
+  word-wrap: break-word;  
+}
+
+#notifications_table tr td{
+  cursor: pointer;
+}
+
+.underline{
+  border-bottom: 4px solid #36c6d3
 }

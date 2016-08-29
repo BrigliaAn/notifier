@@ -1,7 +1,7 @@
     <!-- Begin page content -->
     <div class="container-fluid" style="padding-top: 80px;">
       <div class="vertical-line-right col-lg-7 col-md-7 col-sm-7 col-xs-12" />
-        <div id="tabla_comunicaciones"class="table-responsive">
+        <div id="tabla_comunicaciones" class="table-responsive">
           <table class="table table-hover" id="notifications_table">
             <thead>
               <tr>
@@ -14,18 +14,18 @@
             <tbody> 
               <% for(var i=0; i<notifications.length; i++) {%>
                 <tr>
-                  <td>
-                    <div style="min-width:80px">
+                  <td style="min-width:80px">
+                    <div>
                       <%= moment(notifications[i].date).format('DD/MM/YYYY') %>
                     </div>
                   </td>
-                  <td>
-                    <div style="max-width:100px; overflow:hidden;" title="Ver detalle" class="details" data-id="<%= notifications[i]._id %>">
+                  <td style="max-width:100px;"">
+                    <div style="overflow:hidden; white-space: nowrap;  text-overflow: ellipsis;" title="Ver detalle" class="details" data-id="<%= notifications[i]._id %>">
                       <%= notifications[i].title %>
                     </div>
                   </td>
-                  <td>
-                    <div style="max-width:350px; overflow:hidden;" title="Ver detalle" class="details" data-id="<%= notifications[i]._id %>">
+                  <td style="max-width:250px;">
+                    <div style="overflow:hidden; white-space: nowrap;  text-overflow: ellipsis;" title="Ver detalle" class="details" data-id="<%= notifications[i]._id %>">
                       <%- (notifications[i].content).replace(/<[^>]*>/g, '') %>
                     </div>
                   </td>

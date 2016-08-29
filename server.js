@@ -8,6 +8,7 @@ var notifications = require('./routes/notifications.js');
 var index = require('./routes/index.js')
 var socketio = require('socket.io');
 var eventEmitter = require('events').EventEmitter;
+var Notification = require('./model/notification.js');
 
 var events= new eventEmitter.EventEmitter();
 var app = express();
@@ -42,6 +43,7 @@ var server = app.listen(process.env.PORT || config.port, function() {
 });
 
 var io = socketio.listen(server);
+var clients = {};
 
 io.use(function(socket, next){
     if ( typeof socket.handshake.query.sede === "string") {
@@ -52,11 +54,31 @@ io.use(function(socket, next){
     next(new Error('Authentication error: No sede'));
 });
 
-io.on('connection', function(socket,username) {
+io.on('connection', function(socket) {
     console.log('Client connected... SEDE: ' + socket.sede );
-
-    events.on('latest-notification-changed',function(notification){
-    	console.log("This is the lastest notification", JSON.stringify(notification) );
-    	socket.emit('latest-notification-changed',notification);
+    clients[socket.sede] = socket;
+    Notification.getLatestNotificationBySede(socket.sede, function(err, notification){
+        console.log("id sede", socket.sede);
+        if(!err) {
+            socket.emit('latest-notification-changed',notification);
+        }
     });
+    events.on('latest-notification-changed',function(notification){
+        console.log("emitiendo latest nofii", notification);
+        if(notification.office_id == 3){
+            console.log("paratodas las sedes", notification);
+            socket.emit('latest-notification-changed',notification);
+        }
+        if(notification.office_id == 1){
+            console.log("para sede escobar");
+            clients['1'].emit('latest-notification-changed',notification);
+        }
+        if(notification.office_id == 2){
+            console.log("para sede derqui");
+            clients['2'].emit('latest-notification-changed',notification);
+        }
+    });
+    //events.on('latest-notification-changed',function(notification){
+    //	socket.emit('latest-notification-changed',notification);
+    //});
 });
