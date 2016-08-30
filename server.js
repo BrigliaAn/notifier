@@ -74,6 +74,7 @@ io.on('connection',function(socket){
         }else{
             //emit to office
             console.log("para sede ", notification.office_id);
+            //TODO VALIDATE IF SOCKET EXISTS!!!!
             clients[notification.office_id].emit('latest-notification-changed',notification);
         }
     });

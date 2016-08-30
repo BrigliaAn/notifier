@@ -17,9 +17,13 @@ router.use(function (req,res,next){
 });
 
 router.get('/',function(req,res){
-	Notification.getLatestNotifications(5,function(err,latestNotifications){
+	Notification.getLatestNotifications(4,function(err,latestNotifications){
+		console.log("notiiss", latestNotifications);
 		if(!err){
 			res.render('./admin', {notifications : latestNotifications});
+		}
+		if(!latestNotifications){
+			res.render('./admin', {notifications : null});
 		}
 	});
 });
