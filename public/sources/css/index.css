@@ -1,0 +1,14 @@
+/*Styles associeted to the screens views*/
+
+#latest_notification{
+	font-size: large;
+}
+
+hr{
+	margin: 2px;
+}
+
+#date-time{
+	margin-top: 20px;
+	text-align: -webkit-center;
+}

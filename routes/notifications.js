@@ -50,7 +50,7 @@ router.get('/showDetails/:id',function(req,res){
 
 router.post('/createNotification',function(req,res){
 	var event = getEventEmmiter(req);
-	Notification.create({title:req.body.title,content:req.body.content,office_id:req.body.office_id},function(err,result){
+	Notification.create({title:req.body.title,content:req.body.content,office_id:req.body.office_id,date:new Date(Date())},function(err,result){
 		if (err) throw err;
 		console.log('Notification saved successfully!');
 		event.emit('new-latest-notification', result);

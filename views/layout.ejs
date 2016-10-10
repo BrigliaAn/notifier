@@ -63,8 +63,10 @@
     <script>window.jQuery || document.write('<script src="/sources/js/jquery/jquery.min.js"><\/script>')</script>
     <script src="/sources/bootstrap/js/bootstrap.min.js"></script>
     <script src="/sources/js/utils.js"></script>
+    <script src="/sources/moments/moments.min.js"></script>
     <!-- include datatables js-->
     <script src="/sources/js/datatables.min.js"></script>
+    <script src="/sources/dataTables/sorting-datetime-moment.js"></script>
     <!-- include summernote js-->
     <script src="/sources/summernote/summernote.min.js"></script>
     <!-- include summernote-es-ES -->
@@ -81,14 +83,15 @@
           $('#summernote').on('summernote.change', function(we, e) {
             $('input[name=content]').val($("#summernote").summernote("code"));
           });
+          $.fn.dataTable.moment( 'DD/MM/YYYY' );
           $('#notifications_table').DataTable({
             "language": {
-              "url": "/sources/dataTables/lang-es.json",
-              },
-              "iDisplayLength": 8,
-              "bLengthChange": false,
-              "order": [[ 0, "desc" ]]
-           });
+            "url": "/sources/dataTables/lang-es.json",
+             },
+            "iDisplayLength": 8,
+            "bLengthChange": false,
+            "order": [[ 0, "desc" ]]
+          });
         $('#summernote').summernote('code', $('#content').val());
       });
     </script>
