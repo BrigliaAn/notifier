@@ -94,8 +94,16 @@
             "iDisplayLength": 8,
             "bLengthChange": false,
             "order": [[ 0, "desc" ]],
-            "fnInitComplete": function () {
-              $('#notifications_table').show();
+            // The following reduces the page load time by reducing the reflows the browser is invoking
+            "fnPreDrawCallback":function(){
+                $("#loading").show();
+            },
+            "fnDrawCallback":function(){
+            },
+            "fnInitComplete":function(){
+                $('#notifications_table').show();
+                this.fnAdjustColumnSizing();
+                $("#loading").hide();
             }
           });
           $('#summernote').summernote('code', $('#content').val());
