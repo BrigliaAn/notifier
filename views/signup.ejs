@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Signup </title>
+<link href="/sources/css/login.css" rel="stylesheet">
+</head>
+<body>
+  <div class="login-page">
+    <div class="form">
+      <% if (message) { %>
+        <p class="error-message"><%= message %></p>
+      <% } %> 
+      <form class="register-form" role="form" action="/signup" method="POST">
+        <input type="text" placeholder="username" name="username"/>
+        <input type="password" placeholder="password" name="password"/>
+        <input type="text" placeholder="name" name="name"/>
+        <button type="submit">Crear</button>
+        <p class="message">Ya estás registrado? <a href="/">Entrar</a></p>
+      </form>      
+    </div>
+  </div>
+</body>
+</html>

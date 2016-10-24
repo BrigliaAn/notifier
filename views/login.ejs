@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Login </title>
+<link href="/sources/css/login.css" rel="stylesheet">
+</head>
+<body>
+  <div class="login-page">
+    <div class="form">
+     <% if (message) { %>
+   	  <p class="error-message"><%= message %></p>
+   	 <% } %> 
+      <form class="login-form" role="form" action="/login" method="POST">
+        <input type="text" placeholder="username" name="username"/>
+        <input type="password" placeholder="password" name="password"/>
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

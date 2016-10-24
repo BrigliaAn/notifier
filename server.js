@@ -5,10 +5,12 @@ var path = require('path');
 var config = require('./config.global');
 var ejsLayouts = require("express-ejs-layouts");
 var notifications = require('./routes/notifications.js');
-var index = require('./routes/index.js')
 var socketio = require('socket.io');
 var eventEmitter = require('events').EventEmitter;
 var Notification = require('./model/notification.js');
+var passport = require('passport');
+var expressSession = require('express-session');
+var index = require('./routes/index.js')(passport);
 
 var events= new eventEmitter.EventEmitter();
 var app = express();
@@ -26,6 +28,25 @@ mongoose.connect(config.mongo.uri,function (err, res) {
 		console.log ('Succees! Connected to: ' + config.mongo.uri);
 	}
 });
+
+// Configuring Passport
+app.use(expressSession({
+    secret: 'mySecretKey',
+    resave: true,
+    saveUninitialized: true
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Initialize Passport
+var initPassport = require('./passport/init');
+initPassport(passport);
+
+// Using the flash middleware provided by connect-flash to store messages in session
+ // and displaying in templates
+var flash = require('connect-flash');
+app.use(flash());
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies

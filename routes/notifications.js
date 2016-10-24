@@ -11,44 +11,49 @@ function getEventEmmiter(request) {
 	return request.app.get('notificationsEvents');
 }
 
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/');
+}
+
 router.use(function (req,res,next){
 	console.log('/'+req.method);
 	next();
 });
 
-router.get('/',function(req,res){
+router.get('/',isAuthenticated,function(req,res){
 	Notification.getLatestNotifications(4,function(err,latestNotifications){
-		console.log("notiiss", latestNotifications);
 		if(!err){
-			res.render('./admin', {notifications : latestNotifications});
+			res.render('./admin', {user: req.user, notifications : latestNotifications});
 		}
 		if(!latestNotifications){
-			res.render('./admin', {notifications : null});
+			res.render('./admin', {user: req.user,notifications : null});
 		}
 	});
 });
 
-router.get('/create',function(req,res){
-	res.render('./create');
+router.get('/create',isAuthenticated,function(req,res){
+	res.render('./create',{user: req.user});
 });
 
-router.get('/list',function(req,res){
+router.get('/list',isAuthenticated,function(req,res){
 	Notification.find({}).sort({'date': -1}).exec(function(err, result) {
   		if(err){
   			console.log(err);
   		}
-		res.render('./list', {notifications: result});
+		res.render('./list', {user:req.user,notifications: result});
 	})
 });
 
-router.get('/showDetails/:id',function(req,res){
+router.get('/showDetails/:id',isAuthenticated,function(req,res){
 	Notification.findOne({_id:req.params.id},function(err,result){
 		if(err) console.log(err);
-		res.render('details',{layout: false,notification:result});
+		res.render('details',{layout: false,user: req.user,notification:result});
 	});
 });
 
-router.post('/createNotification',function(req,res){
+router.post('/createNotification',isAuthenticated,function(req,res){
 	var event = getEventEmmiter(req);
 	Notification.create({title:req.body.title,content:req.body.content,office_id:req.body.office_id,date:new Date(Date())},function(err,result){
 		if (err) throw err;
@@ -58,7 +63,7 @@ router.post('/createNotification',function(req,res){
 	res.redirect('/notifications/list');
 });
 
-router.get('/delete/:id',function(req,res){
+router.get('/delete/:id',isAuthenticated,function(req,res){
 	var event = getEventEmmiter(req);
 	Notification.getLatestNotification(function(latestError,latestNotification){
 		var latestNotification = latestNotification;
@@ -74,14 +79,14 @@ router.get('/delete/:id',function(req,res){
 
 });
 
-router.get('/edit/:id',function(req,res){
+router.get('/edit/:id',isAuthenticated,function(req,res){
 	Notification.findOne({_id:req.params.id},function(err,result){
 		if(err) console.log(err);
-		res.render('./edit',{notification: result});
+		res.render('./edit',{notification: result,user: req.user});
 	});
 });
 
-router.post('/edit/:id',function(req,res){
+router.post('/edit/:id',isAuthenticated,function(req,res){
 	var event = getEventEmmiter(req);
 	Notification.getLatestNotification(function(latestError,latestNotification){
 		var latestNotification = latestNotification;
@@ -100,7 +105,7 @@ router.post('/edit/:id',function(req,res){
 	});
 });
 
-router.get('/notify/:id',function(req,res){
+router.get('/notify/:id',isAuthenticated,function(req,res){
 	var event = getEventEmmiter(req);
 	Notification.findOne({_id:req.params.id},function(err,result){
 		notificationId = result.id;
@@ -116,7 +121,7 @@ router.get('/notify/:id',function(req,res){
 	});
 });
 
-router.get('/resend/:id',function(req,res){
+router.get('/resend/:id',isAuthenticated,function(req,res){
 	var event = getEventEmmiter(req);
 	Notification.findOneAndUpdate({_id:req.params.id},{date: new Date(Date()),notified:false},function(err,result){
 		if(err) console.log(err);
