@@ -93,9 +93,13 @@
              },
             "iDisplayLength": 8,
             "bLengthChange": false,
-            "order": [[ 0, "desc" ]]
+            "order": [[ 0, "desc" ]],
+            "fnInitComplete": function () {
+              $('#notifications_table').show();
+            }
           });
-        $('#summernote').summernote('code', $('#content').val());
+          $('#summernote').summernote('code', $('#content').val());
+
       });
     </script>
   </body>

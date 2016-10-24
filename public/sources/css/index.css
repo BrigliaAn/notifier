@@ -1,7 +1,32 @@
 /*Styles associeted to the screens views*/
 
-#latest_notification{
-	font-size: large;
+#notification-title{
+	margin-top:7px;
+	font-size: xx-large;
+}
+
+h1 { 
+	font-size: 80px; 
+}
+
+h2 { 
+	font-size: 60px; 
+}
+
+h3 { 
+	font-size: 45px; 
+}
+
+h4 { 
+	font-size: 35px; 
+}
+
+h5 { 
+	font-size: 27px;
+}
+
+h6 {
+ 	font-size: 22px; 
 }
 
 hr{
