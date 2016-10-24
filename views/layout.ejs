@@ -96,14 +96,12 @@
             "order": [[ 0, "desc" ]],
             // The following reduces the page load time by reducing the reflows the browser is invoking
             "fnPreDrawCallback":function(){
-                $("#loading").show();
             },
             "fnDrawCallback":function(){
             },
             "fnInitComplete":function(){
                 $('#notifications_table').show();
                 this.fnAdjustColumnSizing();
-                $("#loading").hide();
             }
           });
           $('#summernote').summernote('code', $('#content').val());
