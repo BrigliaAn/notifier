@@ -8,6 +8,7 @@
                     </div>
                     <div class="panel-body panel-admin">
                       <% if (notifications) { %>
+                        <%if (notifications.length >= 4){ %>
                         <ul class="timeline">
                             <li>
                                 <div class="timeline-badge success">
@@ -63,6 +64,7 @@
                             </li>
                           </ul>
                           <% } %>
+                         <% } %>
                         </div>
                     </div>
                 </div>

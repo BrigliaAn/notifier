@@ -1,10 +1,7 @@
 <!--sommernote css -->
 <link href="/sources/summernote/summernote.css" rel="stylesheet">
 <!-- Begin page content -->
-<div class="container" style="padding-top: 30px;">
-  <div class="page-header uppercase-title">
-    <h4>Nueva comunicación</h4>
-  </div>
+<div class="container" style="padding-top: 80px;">
   <form role="form" action="/notifications/createNotification" method="POST">
     <input type="hidden" name="content" />
     <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -19,7 +16,7 @@
         <option value="3">Todos</option>
       </select>
     </div>
-    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom:0px">
       <label for="content">Mensaje</label>
       <div id="summernote">
       </div>
